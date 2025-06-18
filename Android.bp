@@ -1,0 +1,471 @@
+package {
+    default_applicable_licenses: ["external_jpegxl_license"],
+}
+
+license {
+    name: "external_jpegxl_license",
+    visibility: [":__subpackages__"],
+    license_kinds: [
+        "SPDX-license-identifier-BSD-3-Clause",
+    ],
+    license_text: [
+        "LICENSE",
+        "PATENTS",
+    ],
+}
+
+cc_library {
+    name: "libjxl",
+    host_supported: true,
+    cflags: [
+        "-DJPEGXL_ENABLE_SKCMS=1",
+    ],
+    sanitize: {
+        all_undefined: true,
+        integer_overflow: true,
+    },
+    export_include_dirs: [
+        "lib/include",
+        "gen/include",
+    ],
+    local_include_dirs: [
+        "lib/include",
+        "gen/include",
+    ],
+    srcs: [
+        ":libjxl_dec_sources",
+        ":libjxl_dec_box_sources",
+        ":libjxl_dec_jpeg_sources",
+        ":libjxl_enc_sources",
+        ":libjxl_threads_sources",
+        "lib/jxl/cms/jxl_cms.cc",
+    ],
+    static_libs: [
+        "libhwy",
+        "libbrotli",
+    ],
+    whole_static_libs: [
+        "libskia_skcms",
+    ],
+    visibility: [
+        ":__subpackages__",
+        "//external/dng_sdk:__subpackages__",
+    ],
+}
+
+filegroup {
+    name: "libjxl_codec_apng_sources",
+    srcs: [
+        "lib/extras/dec/apng.cc",
+        "lib/extras/enc/apng.cc",
+    ],
+}
+
+filegroup {
+    name: "libjxl_codec_exr_sources",
+    srcs: [
+        "lib/extras/dec/exr.cc",
+        "lib/extras/enc/exr.cc",
+    ],
+}
+
+filegroup {
+    name: "libjxl_codec_gif_sources",
+    srcs: [
+        "lib/extras/dec/gif.cc",
+    ],
+}
+
+filegroup {
+    name: "libjxl_codec_jpegli_sources",
+    srcs: [
+        "lib/extras/dec/jpegli.cc",
+        "lib/extras/enc/jpegli.cc",
+    ],
+}
+
+filegroup {
+    name: "libjxl_codec_jpg_sources",
+    srcs: [
+        "lib/extras/dec/jpg.cc",
+        "lib/extras/enc/jpg.cc",
+    ],
+}
+
+filegroup {
+    name: "libjxl_codec_jxl_sources",
+    srcs: [
+        "lib/extras/dec/jxl.cc",
+        "lib/extras/enc/jxl.cc",
+    ],
+}
+
+filegroup {
+    name: "libjxl_codec_npy_sources",
+    srcs: [
+        "lib/extras/enc/npy.cc",
+    ],
+}
+
+filegroup {
+    name: "libjxl_codec_pgx_sources",
+    srcs: [
+        "lib/extras/dec/pgx.cc",
+        "lib/extras/enc/pgx.cc",
+    ],
+}
+
+filegroup {
+    name: "libjxl_codec_pnm_sources",
+    srcs: [
+        "lib/extras/dec/pnm.cc",
+        "lib/extras/enc/pnm.cc",
+    ],
+}
+
+filegroup {
+    name: "libjxl_dec_box_sources",
+    srcs: [
+        "lib/jxl/box_content_decoder.cc",
+    ],
+}
+
+filegroup {
+    name: "libjxl_dec_jpeg_sources",
+    srcs: [
+        "lib/jxl/decode_to_jpeg.cc",
+        "lib/jxl/jpeg/dec_jpeg_data.cc",
+        "lib/jxl/jpeg/dec_jpeg_data_writer.cc",
+        "lib/jxl/jpeg/jpeg_data.cc",
+    ],
+}
+
+filegroup {
+    name: "libjxl_dec_sources",
+    srcs: [
+        "lib/jxl/ac_strategy.cc",
+        "lib/jxl/alpha.cc",
+        "lib/jxl/ans_common.cc",
+        "lib/jxl/blending.cc",
+        "lib/jxl/chroma_from_luma.cc",
+        "lib/jxl/coeff_order.cc",
+        "lib/jxl/color_encoding_internal.cc",
+        "lib/jxl/compressed_dc.cc",
+        "lib/jxl/convolve_slow.cc",
+        "lib/jxl/convolve_symmetric5.cc",
+        "lib/jxl/dct_scales.cc",
+        "lib/jxl/dec_ans.cc",
+        "lib/jxl/dec_bit_reader.cc",
+        "lib/jxl/dec_cache.cc",
+        "lib/jxl/dec_context_map.cc",
+        "lib/jxl/dec_external_image.cc",
+        "lib/jxl/dec_frame.cc",
+        "lib/jxl/dec_group.cc",
+        "lib/jxl/dec_group_border.cc",
+        "lib/jxl/dec_huffman.cc",
+        "lib/jxl/dec_modular.cc",
+        "lib/jxl/dec_noise.cc",
+        "lib/jxl/dec_patch_dictionary.cc",
+        "lib/jxl/dec_xyb.cc",
+        "lib/jxl/decode.cc",
+        "lib/jxl/entropy_coder.cc",
+        "lib/jxl/epf.cc",
+        "lib/jxl/fields.cc",
+        "lib/jxl/frame_header.cc",
+        "lib/jxl/headers.cc",
+        "lib/jxl/huffman_table.cc",
+        "lib/jxl/icc_codec.cc",
+        "lib/jxl/icc_codec_common.cc",
+        "lib/jxl/image.cc",
+        "lib/jxl/image_bundle.cc",
+        "lib/jxl/image_metadata.cc",
+        "lib/jxl/image_ops.cc",
+        "lib/jxl/loop_filter.cc",
+        "lib/jxl/luminance.cc",
+        "lib/jxl/memory_manager_internal.cc",
+        "lib/jxl/modular/encoding/dec_ma.cc",
+        "lib/jxl/modular/encoding/encoding.cc",
+        "lib/jxl/modular/modular_image.cc",
+        "lib/jxl/modular/transform/palette.cc",
+        "lib/jxl/modular/transform/rct.cc",
+        "lib/jxl/modular/transform/squeeze.cc",
+        "lib/jxl/modular/transform/squeeze_params.cc",
+        "lib/jxl/modular/transform/transform.cc",
+        "lib/jxl/opsin_params.cc",
+        "lib/jxl/passes_state.cc",
+        "lib/jxl/quant_weights.cc",
+        "lib/jxl/quantizer.cc",
+        "lib/jxl/render_pipeline/low_memory_render_pipeline.cc",
+        "lib/jxl/render_pipeline/render_pipeline.cc",
+        "lib/jxl/render_pipeline/render_pipeline_stage.cc",
+        "lib/jxl/render_pipeline/simple_render_pipeline.cc",
+        "lib/jxl/render_pipeline/stage_blending.cc",
+        "lib/jxl/render_pipeline/stage_chroma_upsampling.cc",
+        "lib/jxl/render_pipeline/stage_cms.cc",
+        "lib/jxl/render_pipeline/stage_epf.cc",
+        "lib/jxl/render_pipeline/stage_from_linear.cc",
+        "lib/jxl/render_pipeline/stage_gaborish.cc",
+        "lib/jxl/render_pipeline/stage_noise.cc",
+        "lib/jxl/render_pipeline/stage_patches.cc",
+        "lib/jxl/render_pipeline/stage_splines.cc",
+        "lib/jxl/render_pipeline/stage_spot.cc",
+        "lib/jxl/render_pipeline/stage_to_linear.cc",
+        "lib/jxl/render_pipeline/stage_tone_mapping.cc",
+        "lib/jxl/render_pipeline/stage_upsampling.cc",
+        "lib/jxl/render_pipeline/stage_write.cc",
+        "lib/jxl/render_pipeline/stage_xyb.cc",
+        "lib/jxl/render_pipeline/stage_ycbcr.cc",
+        "lib/jxl/simd_util.cc",
+        "lib/jxl/splines.cc",
+        "lib/jxl/toc.cc",
+    ],
+}
+
+filegroup {
+    name: "libjxl_enc_sources",
+    srcs: [
+        "lib/jxl/butteraugli/butteraugli.cc",
+        "lib/jxl/enc_ac_strategy.cc",
+        "lib/jxl/enc_adaptive_quantization.cc",
+        "lib/jxl/enc_ans.cc",
+        "lib/jxl/enc_aux_out.cc",
+        "lib/jxl/enc_bit_writer.cc",
+        "lib/jxl/enc_butteraugli_comparator.cc",
+        "lib/jxl/enc_cache.cc",
+        "lib/jxl/enc_chroma_from_luma.cc",
+        "lib/jxl/enc_cluster.cc",
+        "lib/jxl/enc_coeff_order.cc",
+        "lib/jxl/enc_comparator.cc",
+        "lib/jxl/enc_context_map.cc",
+        "lib/jxl/enc_convolve_separable5.cc",
+        "lib/jxl/enc_debug_image.cc",
+        "lib/jxl/enc_detect_dots.cc",
+        "lib/jxl/enc_dot_dictionary.cc",
+        "lib/jxl/enc_entropy_coder.cc",
+        "lib/jxl/enc_external_image.cc",
+        "lib/jxl/enc_fast_lossless.cc",
+        "lib/jxl/enc_fields.cc",
+        "lib/jxl/enc_frame.cc",
+        "lib/jxl/enc_gaborish.cc",
+        "lib/jxl/enc_group.cc",
+        "lib/jxl/enc_heuristics.cc",
+        "lib/jxl/enc_huffman.cc",
+        "lib/jxl/enc_huffman_tree.cc",
+        "lib/jxl/enc_icc_codec.cc",
+        "lib/jxl/enc_image_bundle.cc",
+        "lib/jxl/enc_linalg.cc",
+        "lib/jxl/enc_lz77.cc",
+        "lib/jxl/enc_modular.cc",
+        "lib/jxl/enc_noise.cc",
+        "lib/jxl/enc_patch_dictionary.cc",
+        "lib/jxl/enc_photon_noise.cc",
+        "lib/jxl/enc_progressive_split.cc",
+        "lib/jxl/enc_quant_weights.cc",
+        "lib/jxl/enc_splines.cc",
+        "lib/jxl/enc_toc.cc",
+        "lib/jxl/enc_transforms.cc",
+        "lib/jxl/enc_xyb.cc",
+        "lib/jxl/encode.cc",
+        "lib/jxl/jpeg/enc_jpeg_data.cc",
+        "lib/jxl/jpeg/enc_jpeg_data_reader.cc",
+        "lib/jxl/jpeg/enc_jpeg_huffman_decode.cc",
+        "lib/jxl/modular/encoding/enc_debug_tree.cc",
+        "lib/jxl/modular/encoding/enc_encoding.cc",
+        "lib/jxl/modular/encoding/enc_ma.cc",
+        "lib/jxl/modular/transform/enc_palette.cc",
+        "lib/jxl/modular/transform/enc_rct.cc",
+        "lib/jxl/modular/transform/enc_squeeze.cc",
+        "lib/jxl/modular/transform/enc_transform.cc",
+    ],
+}
+
+filegroup {
+    name: "libjxl_extras_for_tools_sources",
+    srcs: [
+        "lib/extras/codec.cc",
+        "lib/extras/hlg.cc",
+        "lib/extras/metrics.cc",
+        "lib/extras/packed_image_convert.cc",
+        "lib/extras/tone_mapping.cc",
+    ],
+}
+
+filegroup {
+    name: "libjxl_extras_sources",
+    srcs: [
+        "lib/extras/alpha_blend.cc",
+        "lib/extras/common.cc",
+        "lib/extras/compressed_icc.cc",
+        "lib/extras/dec/color_description.cc",
+        "lib/extras/dec/color_hints.cc",
+        "lib/extras/dec/decode.cc",
+        "lib/extras/enc/encode.cc",
+        "lib/extras/exif.cc",
+        "lib/extras/gain_map.cc",
+        "lib/extras/mmap.cc",
+        "lib/extras/time.cc",
+    ],
+}
+
+filegroup {
+    name: "libjxl_gbench_sources",
+    srcs: [
+        "lib/extras/tone_mapping_gbench.cc",
+        "lib/jxl/dct_gbench.cc",
+        "lib/jxl/dec_external_image_gbench.cc",
+        "lib/jxl/enc_external_image_gbench.cc",
+        "lib/jxl/splines_gbench.cc",
+        "lib/jxl/tf_gbench.cc",
+    ],
+}
+
+filegroup {
+    name: "libjxl_jpegli_libjpeg_helper_files",
+    srcs: [
+        "lib/jpegli/libjpeg_test_util.cc",
+    ],
+}
+
+filegroup {
+    name: "libjxl_jpegli_sources",
+    srcs: [
+        "lib/jpegli/adaptive_quantization.cc",
+        "lib/jpegli/bit_writer.cc",
+        "lib/jpegli/bitstream.cc",
+        "lib/jpegli/color_quantize.cc",
+        "lib/jpegli/color_transform.cc",
+        "lib/jpegli/common.cc",
+        "lib/jpegli/decode.cc",
+        "lib/jpegli/decode_marker.cc",
+        "lib/jpegli/decode_scan.cc",
+        "lib/jpegli/destination_manager.cc",
+        "lib/jpegli/downsample.cc",
+        "lib/jpegli/encode.cc",
+        "lib/jpegli/encode_finish.cc",
+        "lib/jpegli/encode_streaming.cc",
+        "lib/jpegli/entropy_coding.cc",
+        "lib/jpegli/error.cc",
+        "lib/jpegli/huffman.cc",
+        "lib/jpegli/idct.cc",
+        "lib/jpegli/input.cc",
+        "lib/jpegli/memory_manager.cc",
+        "lib/jpegli/quant.cc",
+        "lib/jpegli/render.cc",
+        "lib/jpegli/simd.cc",
+        "lib/jpegli/source_manager.cc",
+        "lib/jpegli/upsample.cc",
+    ],
+}
+
+filegroup {
+    name: "libjxl_jpegli_testlib_files",
+    srcs: [
+        "lib/jpegli/test_utils.cc",
+    ],
+}
+
+filegroup {
+    name: "libjxl_jpegli_tests",
+    srcs: [
+        "lib/jpegli/decode_api_test.cc",
+        "lib/jpegli/encode_api_test.cc",
+        "lib/jpegli/error_handling_test.cc",
+        "lib/jpegli/input_suspension_test.cc",
+        "lib/jpegli/output_suspension_test.cc",
+        "lib/jpegli/source_manager_test.cc",
+        "lib/jpegli/streaming_test.cc",
+        "lib/jpegli/transcode_api_test.cc",
+    ],
+}
+
+filegroup {
+    name: "libjxl_jpegli_wrapper_sources",
+    srcs: [
+        "lib/jpegli/libjpeg_wrapper.cc",
+    ],
+}
+
+filegroup {
+    name: "libjxl_testlib_files",
+    srcs: [
+        "lib/jxl/dec_transforms_testonly.cc",
+        "lib/jxl/test_image.cc",
+        "lib/jxl/test_memory_manager.cc",
+        "lib/jxl/test_utils.cc",
+    ],
+}
+
+filegroup {
+    name: "libjxl_tests",
+    srcs: [
+        "lib/extras/codec_test.cc",
+        "lib/extras/compressed_icc_test.cc",
+        "lib/extras/dec/color_description_test.cc",
+        "lib/extras/dec/pgx_test.cc",
+        "lib/extras/gain_map_test.cc",
+        "lib/extras/jpegli_test.cc",
+        "lib/jxl/ac_strategy_test.cc",
+        "lib/jxl/alpha_test.cc",
+        "lib/jxl/ans_common_test.cc",
+        "lib/jxl/ans_test.cc",
+        "lib/jxl/bit_reader_test.cc",
+        "lib/jxl/bits_test.cc",
+        "lib/jxl/blending_test.cc",
+        "lib/jxl/butteraugli/butteraugli_test.cc",
+        "lib/jxl/byte_order_test.cc",
+        "lib/jxl/cms/tone_mapping_test.cc",
+        "lib/jxl/cms/transfer_functions_test.cc",
+        "lib/jxl/coeff_order_test.cc",
+        "lib/jxl/color_encoding_internal_test.cc",
+        "lib/jxl/color_management_test.cc",
+        "lib/jxl/convolve_test.cc",
+        "lib/jxl/data_parallel_test.cc",
+        "lib/jxl/dct_test.cc",
+        "lib/jxl/decode_test.cc",
+        "lib/jxl/enc_bit_writer_test.cc",
+        "lib/jxl/enc_external_image_test.cc",
+        "lib/jxl/enc_gaborish_test.cc",
+        "lib/jxl/enc_linalg_test.cc",
+        "lib/jxl/enc_optimize_test.cc",
+        "lib/jxl/enc_photon_noise_test.cc",
+        "lib/jxl/encode_test.cc",
+        "lib/jxl/entropy_coder_test.cc",
+        "lib/jxl/fast_math_test.cc",
+        "lib/jxl/fields_test.cc",
+        "lib/jxl/gamma_correct_test.cc",
+        "lib/jxl/gradient_test.cc",
+        "lib/jxl/iaca_test.cc",
+        "lib/jxl/icc_codec_test.cc",
+        "lib/jxl/image_bundle_test.cc",
+        "lib/jxl/image_ops_test.cc",
+        "lib/jxl/jxl_test.cc",
+        "lib/jxl/lehmer_code_test.cc",
+        "lib/jxl/modular_test.cc",
+        "lib/jxl/opsin_image_test.cc",
+        "lib/jxl/opsin_inverse_test.cc",
+        "lib/jxl/padded_bytes_test.cc",
+        "lib/jxl/passes_test.cc",
+        "lib/jxl/patch_dictionary_test.cc",
+        "lib/jxl/preview_test.cc",
+        "lib/jxl/quant_weights_test.cc",
+        "lib/jxl/quantizer_test.cc",
+        "lib/jxl/rational_polynomial_test.cc",
+        "lib/jxl/render_pipeline/render_pipeline_test.cc",
+        "lib/jxl/roundtrip_test.cc",
+        "lib/jxl/simd_util_test.cc",
+        "lib/jxl/speed_tier_test.cc",
+        "lib/jxl/splines_test.cc",
+        "lib/jxl/toc_test.cc",
+        "lib/jxl/xorshift128plus_test.cc",
+        "lib/threads/thread_parallel_runner_test.cc",
+    ],
+}
+
+filegroup {
+    name: "libjxl_threads_sources",
+    srcs: [
+        "lib/threads/resizable_parallel_runner.cc",
+        "lib/threads/thread_parallel_runner.cc",
+        "lib/threads/thread_parallel_runner_internal.cc",
+    ],
+}
