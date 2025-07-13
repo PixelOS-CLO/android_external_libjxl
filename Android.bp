@@ -40,10 +40,18 @@ cc_library {
         ":libjxl_threads_sources",
         "lib/jxl/cms/jxl_cms.cc",
     ],
-    static_libs: [
-        "libhwy",
-        "libbrotli",
-    ],
+    shared: {
+        static_libs: [
+            "libhwy",
+            "libbrotli",
+        ],
+    },
+    static: {
+        whole_static_libs: [
+            "libhwy",
+            "libbrotli",
+        ],
+    },
     whole_static_libs: [
         "libskia_skcms",
     ],
@@ -51,6 +59,8 @@ cc_library {
         ":__subpackages__",
         "//external/dng_sdk:__subpackages__",
     ],
+    sdk_version: "current",
+    stl: "c++_shared",
 }
 
 filegroup {
